@@ -282,3 +282,6 @@
 
 	/// Keeps track of what ambience we are playing. Yeah i know it sucks.
 	var/playing_ambience
+
+/// The current fullscreen state for /client/toggle_fullscreen()
+	var/fullscreen = FALSE
