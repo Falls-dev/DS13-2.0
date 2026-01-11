@@ -35,8 +35,8 @@
 	)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/flash_powder = 15,
-		/obj/item/reagent_containers/glass/bottle/leadacetate = 5,
+		/obj/item/reagent_containers/cup/bottle/flash_powder = 15,
+		/obj/item/reagent_containers/cup/bottle/leadacetate = 5,
 		/obj/item/paper/secretrecipe = 1
 	)
 	rpg_title = "Alchemist"
@@ -47,7 +47,7 @@
 	name = "Chemist"
 	jobtype = /datum/job/chemist
 
-	id_trim = /datum/id_trim/job/chemist
+	id_template = /datum/access_template/job/chemist
 	uniform = /obj/item/clothing/under/rank/medical/ds_chemist
 	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
 	belt = /obj/item/modular_computer/tablet/pda/chemist

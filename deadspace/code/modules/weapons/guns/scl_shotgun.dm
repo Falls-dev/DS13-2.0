@@ -59,9 +59,10 @@ DS SCL Shotgun
 	. = ..()
 	. += "scl_shotgun[magazine ? "_mag" : ""]"
 
-/obj/item/gun/ballistic/shotgun/scl_shotgun/afterattack_secondary(atom/target, mob/living/user, flag, params)
+//TODO : Rework gun underbarrel to use the special attack code, rather then being a second gun in a gun
+/*obj/item/gun/ballistic/shotgun/scl_shotgun/afterattack_secondary(atom/target, mob/living/user, flag, params)
 	underbarrel.afterattack(target, user, flag, params)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN */
 
 /obj/item/gun/ballistic/shotgun/scl_shotgun/attackby(obj/item/A, mob/user, params)
 	if(isammocasing(A))

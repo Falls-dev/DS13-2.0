@@ -1,10 +1,7 @@
-/obj/structure/closet/secure_closet/ds/engineering_chief
-	name = "\proper chief engineer's locker"
-	req_access = list(ACCESS_CE)
-	icon_state = "ce"
+/obj/structure/closet/secure_closet/engineering_chief/ds
 
-/obj/structure/closet/secure_closet/ds/engineering_chief/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/engineering_chief/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/advanced_engineer(src)
 	new /obj/item/gun/ballistic/automatic/pistol/rivet(src)
 	new /obj/item/ammo_box/magazine/rivet(src)
@@ -22,13 +19,10 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
-/obj/structure/closet/secure_closet/ds/engineering_personal
-	name = "engineer's locker"
-	req_access = list(ACCESS_ENGINE_EQUIP)
-	icon_state = "eng_secure"
+/obj/structure/closet/secure_closet/engineering_personal/ds
 
-/obj/structure/closet/secure_closet/ds/engineering_personal/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/engineering_personal/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/standard_engineer(src)
 	new /obj/item/gun/ballistic/automatic/pistol/rivet(src)
 	new /obj/item/ammo_box/magazine/rivet(src)
@@ -44,13 +38,10 @@
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/storage/bag/construction(src)
 
-/obj/structure/closet/secure_closet/ds/atmospherics
-	name = "\proper atmospheric technician's locker"
-	req_access = list(ACCESS_ATMOSPHERICS)
-	icon_state = "atmos"
+/obj/structure/closet/secure_closet/atmospherics/ds
 
-/obj/structure/closet/secure_closet/ds/atmospherics/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/atmospherics/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/standard_engineer
 	new /obj/item/gun/ballistic/automatic/pistol/rivet(src)
 	new /obj/item/ammo_box/magazine/rivet(src)

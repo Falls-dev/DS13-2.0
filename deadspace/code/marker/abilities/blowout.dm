@@ -3,6 +3,7 @@
 	desc = "Destroys a target wall light, with an explosion of sparks."
 	button_icon_state = "blowout"
 	cost = 40
+	marker_flags = SIGNAL_ABILITY_POST_ACTIVATION
 
 /datum/action/cooldown/necro/psy/blowout/PreActivate(obj/machinery/light/target)
 	if(!istype(target, /obj/machinery/light))

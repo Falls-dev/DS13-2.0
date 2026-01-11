@@ -62,15 +62,12 @@
 	jobtype = /datum/job/chief_medical_officer
 
 	id = /obj/item/card/id/advanced/silver
-	id_trim = /datum/id_trim/job/chief_medical_officer
+	id_template = /datum/access_template/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/ds_senior_med
-	backpack_contents = list(
-		/obj/item/assembly/flash/handheld
-	)
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/really_blue_sneakers
 	l_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery
 
@@ -79,6 +76,10 @@
 		/obj/item/gun/syringe,
 		/obj/item/stamp/cmo,
 		)
+
+/datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	astype(H.w_uniform.GetComponent(/datum/component/hooded), /datum/component/hooded)?.try_equip_hood(H.w_uniform, H)
 
 /datum/outfit/job/cmo/mod
 	name = "Medical Director (MODsuit)"

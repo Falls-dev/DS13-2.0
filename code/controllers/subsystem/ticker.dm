@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/mob/dead/new_player/ready_players
 
 	///Media track for the music played in the lobby
-	var/datum/media/login_music
+	var/list/datum/media/login_music = list()
 	///Media track for the round end music.
 	var/datum/media/credits_music
 
@@ -142,6 +142,7 @@ SUBSYSTEM_DEF(ticker)
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
 			fire()
+
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
 			if(isnull(timeLeft))
@@ -252,8 +253,8 @@ SUBSYSTEM_DEF(ticker)
 
 	// There may be various config settings that have been set or modified by this point.
 	// This is the point of no return before spawning in new players, let's run over the
-	// job trim singletons and update them based on any config settings.
-	SSid_access.refresh_job_trim_singletons()
+	// job template singletons and update them based on any config settings.
+	SSid_access.refresh_job_template_singletons()
 
 	CHECK_TICK
 
@@ -324,13 +325,11 @@ SUBSYSTEM_DEF(ticker)
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
-	for(var/i in GLOB.player_list)
-		if(!ishuman(i))
-			continue
-		var/mob/living/carbon/human/iter_human = i
-
+	for(var/mob/living/carbon/human/iter_human in GLOB.player_list)
+		iter_human.client?.give_award(/datum/award/achievement/enter_the_pool, iter_human)
 		if(!iter_human.hardcore_survival_score)
 			continue
+
 		if(iter_human.mind?.special_role)
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score) * 2] hardcore random points if you greentext this round!"))
 		else
@@ -715,14 +714,16 @@ SUBSYSTEM_DEF(ticker)
 	if(!istype(track))
 		CRASH("Non-datum/media given to set_login_music()!")
 
-	if(credits_music == login_music)
-		credits_music = track
-	login_music = track
+	login_music -= track
+	login_music.Insert(1, track)
 
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		if(!player.client)
 			continue
-		player.client.playtitlemusic()
+
+		player.persistent_client.playlist.push_to_front(track)
+		player.persistent_client.playlist.cycle_track()
+		player.persistent_client.playlist.play_track()
 
 /datum/controller/subsystem/ticker/proc/pick_login_music()
 	var/list/title_music_data = SSmedia.get_track_pool(MEDIA_TAG_LOBBYMUSIC_COMMON)
@@ -734,6 +735,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(rustg_file_exists("data/last_round_lobby_music.txt")) //The define isn't truthy
 		old_login_music_t = rustg_file_read("data/last_round_lobby_music.txt")
+
 	var/list/music_tracks = title_music_data + rare_music_data
 	//Filter map-specific tracks
 	for(var/datum/media/music_filtered as anything in music_tracks)
@@ -742,6 +744,7 @@ SUBSYSTEM_DEF(ticker)
 		if(music_filtered.map && music_filtered.map != SSmapping.config.map_name)
 			rare_music_data -= music_filtered
 			title_music_data -= music_filtered
+
 	//Remove the previous song
 	if(old_login_music)
 		//Remove the old login music from the current pool if it wouldn't empty the pool.
@@ -750,22 +753,23 @@ SUBSYSTEM_DEF(ticker)
 		else if(length(title_music_data) > 1)
 			title_music_data -= old_login_music
 
+	if(length(title_music_data))
+		login_music += shuffle(title_music_data)
+
 	//Try to set a song json
 	var/use_rare_music = prob(10)
 	if(use_rare_music && length(rare_music_data))
-		login_music = pick(rare_music_data)
-	if(!login_music && length(title_music_data))
-		login_music = pick(title_music_data)
+		login_music.Insert(1, pick(rare_music_data))
 
 	//If there's no valid jsons, fallback to the classic ROUND_START_MUSIC_LIST.
-	if(!login_music)
-		var/music = pick(world.file2list(ROUND_START_MUSIC_LIST, "\n"))
-		var/list/split_path = splittext(music, "/")
+	if(!length(login_music))
 		//Construct a minimal music track to satisfy the system.
-		login_music = new(name = split_path[length(split_path)], path = music)
+		for(var/music in shuffle(world.file2list(ROUND_START_MUSIC_LIST)))
+			var/list/split_path = splittext(music, "/")
+			login_music += new /datum/media(name = split_path[length(split_path)], path = music)
 
 	//Write the last round file to our current choice
-	rustg_file_write(login_music.path, "data/last_round_lobby_music.txt")
+	rustg_file_write(login_music[1].path, "data/last_round_lobby_music.txt")
 
 /datum/controller/subsystem/ticker/proc/pick_credits_music()
 	var/list/music_data = SSmedia.get_track_pool(MEDIA_TAG_ROUNDEND_COMMON)

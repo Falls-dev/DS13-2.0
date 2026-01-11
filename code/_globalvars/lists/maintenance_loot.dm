@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
+		/obj/item/disk/data/floppy = 1,
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/paper = 1,
@@ -46,7 +47,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/food/urinalcake = 1,
 		/obj/item/light/bulb = 1,
 		/obj/item/light/tube = 1,
-		/obj/item/reagent_containers/food/drinks/drinkingglass = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
 
 		/obj/item/airlock_painter = 1,
 		/obj/item/airlock_painter/decal = 1,
@@ -77,7 +78,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/geiger_counter = 1,
 		/obj/item/mop = 1,
 		/obj/item/pushbroom = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/t_scanner = 1,
 		/obj/item/toy/crayon/spraycan = 1,
@@ -126,8 +127,8 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 	list(//medical and chemicals
 		/obj/item/grenade/chem_grenade/cleaner = 1,
 		/obj/item/lead_pipe = 1,
-		/obj/item/reagent_containers/glass/beaker = 1,
-		/obj/item/reagent_containers/glass/rag = 1,
+		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/cell/lead = 1,
@@ -136,8 +137,8 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
-		/obj/item/reagent_containers/food/drinks/coffee = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/beer = 1,
+		/obj/item/reagent_containers/cup/glass/coffee = 1,
 		) = 1,
 
 	list(//misc
@@ -211,13 +212,13 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/bruise_pack = 1,
 			) = 1,
 		list(//medical chems
-			/obj/item/reagent_containers/glass/bottle/dylovene = 1,
+			/obj/item/reagent_containers/cup/bottle/dylovene = 1,
 			/obj/item/reagent_containers/hypospray/medipen = 1,
 			) = 1,
 		list(//drinks
-			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
-			/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
-			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
+			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
+			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
+			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 			) = 1,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
@@ -277,12 +278,6 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/gun/ballistic/automatic/pistol/divet/rb = 1,
 		/obj/item/gun/ballistic/automatic/pistol/divet/no_mag = 1,
 		) = 1,
-	list(//data disks for lathes
-		/obj/item/disk/data/hyper/preloaded/fabricator/engineering = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/medical = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/supply = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/service = 1,
-		) = 1,
 ))
 
 
@@ -330,7 +325,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/effect/spawner/random/deadspace/rig = 1,
 
-		//weapons 
+		//weapons
 		/obj/item/fireaxe/hugewrench = 1,
 		/obj/item/gun/ballistic/shotgun/scl_shotgun/no_mag = 1,
 		/obj/item/gun/ballistic/pulse/no_mag = 1,
@@ -341,13 +336,6 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/ammo_box/magazine/ds12g = 1,
 		/obj/item/ammo_box/magazine/pulse = 1,
 		) = 1,
-
-	list(//data disks for lathes
-		/obj/item/disk/data/hyper/preloaded/fabricator/security = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/imprinter = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/civ = 1,
-		) = 1,
-
 ))
 
 
@@ -367,7 +355,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			/obj/item/instrument/trumpet/spectral = 1,
 			) = 1,
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
-		/obj/item/disk/data/hyper/preloaded/fabricator/omni = 1,
 	))
 
 //Maintenance loot spawner pools

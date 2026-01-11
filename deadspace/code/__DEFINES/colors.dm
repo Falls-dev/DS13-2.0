@@ -14,5 +14,4 @@
 #define COLOR_KINESIS_INDIGO	     "#4d59db"
 #define COLOR_KINESIS_INDIGO_PALE	"#9fa6f5"
 
-#define COLOR_LUMINOL          "#66ffff"
 #define COLOR_DEEP_SKY_BLUE    "#00e1ff"

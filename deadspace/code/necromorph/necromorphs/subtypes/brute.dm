@@ -1,6 +1,6 @@
-#define CURL_ANIMATION_TIME (0.8 SECONDS)
-#define CURL_FORCED_DURATION (5 SECONDS)
-#define CURL_FORCED_COOLDOWN (1.5 MINUTES)
+#define BRUTE_FRONT_ARMOUR "brutefront"
+#define BRUTE_SIDE_ARMOUR "bruteside"
+#define BRUTE_BACK_ARMOUR "bruteback"
 
 /mob/living/carbon/human/necromorph/brute
 	maxHealth = 510
@@ -9,16 +9,8 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	status_flags = CANSTUN|CANUNCONSCIOUS
-	var/armor_front = 30
-	var/armor_flank = 20
-	/// Multiplier for armor when curling
-	var/curl_armor_mult = 1.5
-	/// If brute is currently curling
-	var/curling = FALSE
-	/// If brute is currently forced to curl
-	var/forced_curl = FALSE
-	/// Time when we can be forced to curl again
-	var/forced_curl_next = 0
+	///Brute has armor ontop of armor, reducing or potentially negating most damage from the front.
+	var/list/facing_modifiers = list(BRUTE_FRONT_ARMOUR = 65, BRUTE_SIDE_ARMOUR = 10, BRUTE_BACK_ARMOUR = -40)
 
 
 /mob/living/carbon/human/necromorph/brute/play_necro_sound(audio_type, volume, vary, extra_range)
@@ -63,59 +55,21 @@
 
 	return
 
-/mob/living/carbon/human/necromorph/brute/proc/start_curl(forced)
-	if(curling)
-		return
-	if(forced)
-		if((forced_curl_next + CURL_FORCED_COOLDOWN) < world.time)
-			return
-		forced_curl = TRUE
-		forced_curl_next = world.time + CURL_FORCED_DURATION
-		addtimer(CALLBACK(src, PROC_REF(end_forced_curl)), CURL_FORCED_DURATION)
-	curling = TRUE
-	ADD_TRAIT(src, TRAIT_ARMS_RESTRAINED, src)
-
-	var/matrix/new_tranform = matrix()
-	new_tranform.Scale(0.9)
-	animate(src, transform = new_tranform, time = CURL_ANIMATION_TIME)
-	play_necro_sound(SOUND_PAIN, 60, TRUE)
-	sleep(CURL_ANIMATION_TIME)
-	play_necro_sound(SOUND_FOOTSTEP, 40, TRUE)
-	sleep(6)
-	play_necro_sound(SOUND_FOOTSTEP, 40, TRUE)
-
-/mob/living/carbon/human/necromorph/brute/proc/stop_curl()
-	if(forced_curl)
-		return
-	curling = FALSE
-	animate(src, transform = matrix(), time = CURL_ANIMATION_TIME)
-	sleep(CURL_ANIMATION_TIME)
-	REMOVE_TRAIT(src, TRAIT_ARMS_RESTRAINED, src)
-
-/mob/living/carbon/human/necromorph/brute/proc/end_forced_curl()
-	forced_curl = FALSE
-	stop_curl()
+//Shamelessly stolen from mech code
+/mob/living/carbon/human/necromorph/brute/proc/get_armour_facing(relative_dir)
+	switch(relative_dir)
+		if(180) // BACKSTAB!
+			return facing_modifiers[BRUTE_BACK_ARMOUR]
+		if(0, 45) // direct or 45 degrees off
+			return facing_modifiers[BRUTE_FRONT_ARMOUR]
+	return facing_modifiers[BRUTE_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
 
 //Switched from species to mob due to code improvements
 /mob/living/carbon/human/necromorph/brute/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, sharpness, attack_direction, attacking_item)
 	var/mob/living/carbon/human/necromorph/brute/H = src
-	var/reduced = 0
-	switch(turn(attack_direction, dir2angle(H.dir)))
-		if(NORTH)
-			reduced = damage * ((100-H.armor_front)/100)
-		if(NORTHEAST, NORTHWEST)
-			reduced = damage * ((100-((H.armor_front+H.armor_flank)/2))/100)
-		if(EAST, WEST)
-			reduced = damage * ((100-H.armor_flank)/100)
-		if(SOUTHEAST, SOUTHWEST)
-			reduced = damage * ((100-(H.armor_flank/2))/100)
-		if(SOUTH)
-			INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human/necromorph/brute, start_curl), TRUE)
-			to_chat(H, span_danger("You reflexively curl up in panic"))
-			return ..()
-	if(H.curling)
-		reduced *= H.curl_armor_mult
-	blocked += reduced
+	if(attack_direction)
+		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_direction)))
+		H.physiology?.damage_resistance += facing_modifier
 	return ..()
 
 /datum/necro_class/brute
@@ -129,22 +83,14 @@
 	biomass_spent_required = 950
 	melee_damage_lower = 24
 	melee_damage_upper = 28
-	armor = list(BLUNT = 55, PUNCTURE = 80, SLASH = 45, LASER = 0, ENERGY = 0, BOMB = 45, BIO = 50, FIRE = 10, ACID = 80)
+	armor = list(BLUNT = 30, PUNCTURE = 80, SLASH = 55, LASER = 0, ENERGY = 0, BOMB = 45, BIO = 50, FIRE = 10, ACID = 80)
 	actions = list(
 		/datum/action/cooldown/necro/slam,
 		/datum/action/cooldown/necro/long_charge/brute,
 		/datum/action/cooldown/necro/shoot/brute,
-		/datum/action/cooldown/necro/curl,
 	)
 	minimap_icon = "brute"
 	implemented = TRUE
-	var/armor_front = 30
-	var/armor_flank = 20
-
-/datum/necro_class/brute/load_data(mob/living/carbon/human/necromorph/brute/necro)
-	..()
-	necro.armor_front = armor_front
-	necro.armor_flank = armor_flank
 
 /datum/species/necromorph/brute
 	name = "Brute"
@@ -231,7 +177,3 @@
 		if(isliving(target))
 			var/mob/living/M = target
 			M.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/bioacid)
-
-#undef CURL_ANIMATION_TIME
-#undef CURL_FORCED_DURATION
-#undef CURL_FORCED_COOLDOWN

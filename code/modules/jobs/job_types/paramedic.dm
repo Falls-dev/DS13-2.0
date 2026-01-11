@@ -51,7 +51,7 @@
 	jobtype = /datum/job/paramedic
 
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/job/paramedic
+	id_template = /datum/access_template/job/paramedic
 	uniform = /obj/item/clothing/under/rank/medical/ds_med
 	suit = /obj/item/clothing/suit/toggle/labcoat/paramedic
 	backpack_contents = list(
@@ -63,7 +63,7 @@
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/really_blue_sneakers
 	l_pocket = /obj/item/modular_computer/tablet/pda/medical
 
 	box = /obj/item/storage/box/survival/medical

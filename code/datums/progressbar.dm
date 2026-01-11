@@ -162,6 +162,7 @@
 		if(!istype(underlay))
 			underlay = image(underlay, dir = SOUTH)
 			underlay.filters += filter(type = "outline", size = 1)
+			underlay.maptext = null
 
 		underlay.pixel_y = 2
 		underlay.alpha = 200
@@ -209,7 +210,8 @@
 /obj/effect/abstract/progbar
 	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_0"
-	plane = ABOVE_HUD_PLANE
+	plane = GAME_PLANE
+	layer = FLY_LAYER
 	appearance_flags = APPEARANCE_UI | KEEP_APART
 	pixel_y = 32
 	alpha = 0

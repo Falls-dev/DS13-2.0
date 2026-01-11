@@ -114,6 +114,8 @@
 
 	init_employers()
 
+	init_special_attacks()
+
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
 	for(var/path in subtypesof(/datum/crafting_recipe))
@@ -273,3 +275,8 @@ GLOBAL_LIST_EMPTY(employers_by_name)
 /proc/init_employers()
 	for(var/datum/employer/path as anything in subtypesof(/datum/employer))
 		GLOB.employers_by_name[initial(path.name)] = path
+
+GLOBAL_LIST_EMPTY(special_attacks)
+/proc/init_special_attacks()
+	for(var/datum/special_attack/path as anything in subtypesof(/datum/special_attack))
+		GLOB.special_attacks[path] = new path

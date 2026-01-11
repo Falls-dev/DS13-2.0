@@ -1,12 +1,10 @@
-/obj/structure/closet/secure_closet/ds/research_director
-	name = "\proper research director's locker"
-	req_access = list(ACCESS_RD)
-	icon_state = "rd"
+/obj/structure/closet/secure_closet/research_director/ds
 
-/obj/structure/closet/secure_closet/ds/research_director/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/research_director/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/hacker(src)
-	new /obj/item/clothing/suit/hooded/ds(src)
+	new /obj/item/clothing/head/bio_hood/eg(src)
+	new /obj/item/clothing/suit/bio_suit/eg(src)
 	new /obj/item/storage/bag/garment/research_director(src)
 	new /obj/item/computer_hardware/hard_drive/role/rd(src)
 	new /obj/item/megaphone/command(src)

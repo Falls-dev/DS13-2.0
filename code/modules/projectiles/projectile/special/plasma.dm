@@ -1,7 +1,7 @@
 /obj/projectile/beam/cutter
 	name = "plasma arc"
 	icon = null
-	damage = 12
+	damage = 16
 	hitscan = TRUE
 	dismemberment = 20
 	damage_type = BRUTE //plasma is a physical object with mass, rather than purely burning. this also means you can decapitate/sever limbs, not just ash them.
@@ -25,7 +25,7 @@
 			return BULLET_ACT_FORCE_PIERCE
 
 /obj/projectile/beam/cutter/adv
-	damage = 18.5
+	damage = 19
 	range = 7
 	mine_range = 7
 

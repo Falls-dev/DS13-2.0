@@ -22,12 +22,12 @@
 	owner.client?.images -= template
 	template.loc = null
 
-/datum/action/cooldown/necro/corruption/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/necro/corruption/InterceptClickOn(mob/living/invoker, params, atom/target)
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(unset_after_click)
-			unset_click_ability(caller, refund_cooldown = TRUE)
-		caller.next_click = world.time + click_cd_override
+			unset_click_ability(invoker, refund_cooldown = TRUE)
+		invoker.next_click = world.time + click_cd_override
 		return FALSE
 
 	if(!IsAvailable(feedback = TRUE))
@@ -40,8 +40,8 @@
 
 	// And if we reach here, the action was complete successfully
 	if(!LAZYACCESS(modifiers, SHIFT_CLICK) && unset_after_click)
-		unset_click_ability(caller, refund_cooldown = FALSE)
-	caller.next_click = world.time + click_cd_override
+		unset_click_ability(invoker, refund_cooldown = FALSE)
+	invoker.next_click = world.time + click_cd_override
 
 	return TRUE
 
@@ -67,7 +67,7 @@
 	template.pixel_x = initial(place_structure.base_pixel_x)
 	template.pixel_y = initial(place_structure.base_pixel_y)
 	return ..()
-	
+
 /datum/action/cooldown/necro/corruption/Activate(atom/target)
 	var/mob/camera/marker_signal/signal = owner
 	var/current_biomass = istype(signal, /mob/camera/marker_signal/marker) ? signal.marker.marker_biomass : signal.marker.signal_biomass

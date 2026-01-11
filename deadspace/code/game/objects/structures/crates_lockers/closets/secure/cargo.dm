@@ -1,10 +1,6 @@
-/obj/structure/closet/secure_closet/ds/quartermaster
-	name = "\proper quartermaster's locker"
-	req_access = list(ACCESS_QM)
-	icon_state = "qm"
+/obj/structure/closet/secure_closet/quartermaster/ds
 
-/obj/structure/closet/secure_closet/ds/quartermaster/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/quartermaster/ds/PopulateContents()
 	new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/storage/lockbox/medal/cargo(src)
 	new /obj/item/clothing/under/rank/cargo/qm(src)
@@ -24,16 +20,14 @@
 	new /obj/item/card/id/departmental_budget/car(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/qm(src)
 
-/obj/structure/closet/secure_closet/ds/miner
-	name = "miner's equipment"
+/obj/structure/closet/secure_closet/miner/ds
+	name = "rock breaking equipment"
 	icon_state = "mining"
-	req_access = list(ACCESS_MINING)
 
-/obj/structure/closet/secure_closet/ds/miner/unlocked
+/obj/structure/closet/secure_closet/miner/ds/unlocked
 	locked = FALSE
 
-/obj/structure/closet/secure_closet/ds/miner/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/miner/ds/PopulateContents()
 	new /obj/item/mod/control/pre_equipped/ds/standard_miner(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/storage/box/emptysandbags(src)

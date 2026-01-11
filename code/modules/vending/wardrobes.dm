@@ -63,7 +63,7 @@
 					/obj/item/clothing/shoes/sneakers/white = 4,
 					/obj/item/clothing/head/beret/medical/paramedic = 4,
 					/obj/item/clothing/head/soft/paramedic = 4,
-					/obj/item/clothing/shoes/sneakers/blue = 4,
+					/obj/item/clothing/shoes/really_blue_sneakers = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -97,7 +97,7 @@
 	payment_department = ACCOUNT_ENG
 	light_color = COLOR_VIVID_YELLOW
 
-	discount_access = ACCESS_ENGINE
+	discount_access = ACCESS_ENGINEERING
 /obj/item/vending_refill/wardrobe/engi_wardrobe
 	machine_name = "EngiDrobe"
 
@@ -279,7 +279,7 @@
 					/obj/item/clothing/suit/apron/purple_bartender = 2,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
-					/obj/item/reagent_containers/glass/rag = 2,
+					/obj/item/reagent_containers/cup/rag = 2,
 					/obj/item/storage/box/beanbag = 1,
 					/obj/item/clothing/suit/armor/vest/ballistic = 1,
 					/obj/item/circuitboard/machine/dish_drive = 1,
@@ -317,7 +317,7 @@
 					/obj/item/clothing/head/chefhat = 1,
 					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 					/obj/item/clothing/shoes/cookflops = 2,
-					/obj/item/reagent_containers/glass/rag = 1,
+					/obj/item/reagent_containers/cup/rag = 1,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_STATION_MASTER
@@ -333,24 +333,28 @@
 	icon_state = "janidrobe"
 	product_ads = "Come and get your janitorial clothing, now endorsed by Jinan janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
-	products = list(/obj/item/clothing/under/rank/civilian/janitor = 2,
-					/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/janitor = 2,
-					/obj/item/clothing/gloves/color/black = 2,
-					/obj/item/clothing/head/soft/purple = 2,
-					/obj/item/clothing/mask/bandana/purple = 2,
-					/obj/item/pushbroom = 2,
-					/obj/item/paint_remover = 2,
-					/obj/item/melee/flyswatter = 2,
-					/obj/item/flashlight = 2,
-					/obj/item/clothing/suit/caution = 6,
-					/obj/item/holosign_creator = 2,
-					/obj/item/lightreplacer = 2,
-					/obj/item/soap/nanotrasen = 2,
-					/obj/item/storage/bag/trash = 2,
-					/obj/item/clothing/shoes/galoshes = 2,
-					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 2)
+
+	products = list(
+		/obj/item/clothing/under/rank/civilian/janitor = 2,
+		/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/janitor = 2,
+		/obj/item/clothing/gloves/cleaning = 2,
+		/obj/item/clothing/head/soft/purple = 2,
+		/obj/item/clothing/mask/bandana/purple = 2,
+		/obj/item/pushbroom = 2,
+		/obj/item/paint_remover = 2,
+		/obj/item/melee/flyswatter = 2,
+		/obj/item/flashlight = 2,
+		/obj/item/clothing/suit/caution = 6,
+		/obj/item/holosign_creator = 2,
+		/obj/item/lightreplacer = 2,
+		/obj/item/soap/nanotrasen = 2,
+		/obj/item/storage/bag/trash = 2,
+		/obj/item/clothing/shoes/galoshes = 1,
+		/obj/item/watertank/janitor = 1,
+		/obj/item/storage/belt/janitor = 2
+	)
+
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_ASSISTANT * 0.8
 	extra_price = PAYCHECK_HARD * 0.8
@@ -443,7 +447,7 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
 
-	discount_access = ACCESS_CHEMISTRY
+	discount_access = ACCESS_PHARMACY
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe
 	machine_name = "ChemDrobe"
@@ -491,7 +495,7 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
 
-	discount_access = ACCESS_VIROLOGY
+	discount_access = ACCESS_MEDICAL
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
@@ -506,7 +510,6 @@
 					/obj/item/clothing/under/rank/security/detective/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/brown = 2,
 					/obj/item/clothing/suit/det_suit = 2,
-					/obj/item/clothing/head/fedora/det_hat = 2,
 					/obj/item/clothing/under/rank/security/detective/noir = 2,
 					/obj/item/clothing/under/rank/security/detective/noir/skirt = 2,
 					/obj/item/clothing/accessory/waistcoat = 2,
@@ -526,7 +529,7 @@
 					/obj/item/clothing/shoes/kim = 1,
 					/obj/item/clothing/gloves/kim = 1,
 					/obj/item/clothing/glasses/regular/kim = 1,
-					/obj/item/reagent_containers/food/drinks/flask/det = 2,
+					/obj/item/reagent_containers/cup/glass/flask/det = 2,
 					/obj/item/storage/fancy/cigarettes = 5)
 	premium = list(/obj/item/clothing/head/flatcap = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe

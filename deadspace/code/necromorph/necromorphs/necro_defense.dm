@@ -71,6 +71,12 @@
 		return TRUE
 	apply_damage(dealt_damage, BRUTE, affecting, armor_block)
 
+//Turns out if you put a armor value on a mob all of that armor code actually doesn't check it, so we do all the magic here
+/mob/living/carbon/human/necromorph/getarmor(def_zone, type)
+	var/armor = returnArmor().getRating(type)
+
+	return armor
+
 /mob/living/carbon/human/necromorph/get_eye_protection()
 	return ..() + 2
 

@@ -1,10 +1,7 @@
-/obj/structure/closet/secure_closet/ds/medical3
-	name = "medical doctor's locker"
-	req_access = list(ACCESS_SURGERY)
-	icon_state = "med_secure"
+/obj/structure/closet/secure_closet/medical3/ds
 
-/obj/structure/closet/secure_closet/ds/medical3/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/medical3/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/med(src)
 	new /obj/item/radio/headset/headset_med(src)
 	new /obj/item/defibrillator/loaded(src)
@@ -13,17 +10,10 @@
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
 
-/obj/structure/closet/secure_closet/ds/psychology
-	name = "psychology locker"
-	req_access = list(ACCESS_PSYCHOLOGY)
-	icon_state = "cabinet"
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
-	open_sound_volume = 25
-	close_sound_volume = 50
+/obj/structure/closet/secure_closet/psychology/ds
 
-/obj/structure/closet/secure_closet/ds/psychology/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/psychology/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/med(src)
 	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/suit/black/skirt(src)
@@ -36,15 +26,13 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
 
-/obj/structure/closet/secure_closet/ds/chief_medical
-	name = "\proper medical director's locker"
-	req_access = list(ACCESS_CMO)
-	icon_state = "cmo"
+/obj/structure/closet/secure_closet/chief_medical/ds
 
-/obj/structure/closet/secure_closet/ds/chief_medical/PopulateContents()
-	..()
+/obj/structure/closet/secure_closet/chief_medical/ds/PopulateContents()
+
 	new /obj/item/mod/control/pre_equipped/ds/med_smo(src)
-	new /obj/item/clothing/suit/hooded/ds(src)
+	new /obj/item/clothing/suit/bio_suit/eg(src)
+	new /obj/item/clothing/head/bio_hood/eg(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/computer_hardware/hard_drive/role/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)

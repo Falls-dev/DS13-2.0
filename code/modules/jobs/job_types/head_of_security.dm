@@ -72,7 +72,7 @@
 	jobtype = /datum/job/head_of_security
 
 	id = /obj/item/card/id/advanced/silver
-	id_trim = /datum/id_trim/job/head_of_security
+	id_template = /datum/access_template/job/head_of_security
 	uniform = /obj/item/clothing/under/rank/security/ds_cseco
 	suit = /obj/item/clothing/suit/toggle/cseco
 	backpack_contents = list(

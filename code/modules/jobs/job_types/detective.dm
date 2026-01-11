@@ -2,8 +2,12 @@
 	title = JOB_DETECTIVE
 	description = "Investigate crimes. Solve crimes. Cover up crimes."
 	faction = FACTION_STATION
+
+	pinpad_key = "columbo"
+
 	total_positions = 1
 	spawn_positions = 1
+
 	supervisors = "nobody"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -44,7 +48,7 @@
 		/obj/item/ammo_box/c38/trac = 5,
 	)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
@@ -61,7 +65,7 @@
 	name = JOB_DETECTIVE
 	jobtype = /datum/job/detective
 
-	id_trim = /datum/id_trim/job/detective
+	id_template = /datum/access_template/job/detective
 	uniform = /obj/item/clothing/under/rank/security/detective
 	suit = /obj/item/clothing/suit/det_suit
 	belt = /obj/item/modular_computer/tablet/pda/detective

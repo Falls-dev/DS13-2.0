@@ -41,12 +41,12 @@
 	)
 
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold, /obj/item/toy/captainsaid/collector)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/flask/gold, /obj/item/toy/captainsaid/collector)
 
 	mail_goodies = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
-		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 10,
 		/obj/item/toy/captainsaid/collector = 20
 	)
 
@@ -65,7 +65,7 @@
 	jobtype = /datum/job/captain
 
 	id = /obj/item/card/id/advanced/gold
-	id_trim = /datum/id_trim/job/captain
+	id_template = /datum/access_template/job/captain
 	uniform = /obj/item/clothing/under/rank/captain/ds_captain
 	backpack_contents = list(
 		/obj/item/station_charter = 1,

@@ -894,7 +894,7 @@ SUBSYSTEM_DEF(job)
 
 /obj/item/paper/fluff/spare_id_safe_code/Initialize(mapload)
 	. = ..()
-	var/safe_code = SSid_access.spare_id_safe_code
+	var/safe_code = SSid_access.get_static_pincode(PINCODE_SPARE_ID_SAFE, 5)
 
 	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
 	update_appearance()
@@ -905,16 +905,12 @@ SUBSYSTEM_DEF(job)
 
 /obj/item/paper/fluff/emergency_spare_id_safe_code/Initialize(mapload)
 	. = ..()
-	var/safe_code = SSid_access.spare_id_safe_code
+	var/safe_code = SSid_access.get_static_pincode(PINCODE_SPARE_ID_SAFE, 5)
 
 	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
 	update_appearance()
 
 /datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
-	var/id_safe_code = SSid_access.spare_id_safe_code
-
-	if(!id_safe_code)
-		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
 
 	var/paper = new /obj/item/paper/fluff/spare_id_safe_code()
 	var/list/slots = list(
@@ -934,8 +930,8 @@ SUBSYSTEM_DEF(job)
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)
 		var/obj/item/card/id/id_card = id_slot.GetID(TRUE) || locate() in id_slot
-		if(id_card && !(ACCESS_HEADS in id_card.access))
-			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
+		if(id_card && !(ACCESS_MANAGEMENT in id_card.access))
+			id_card.add_access(ACCESS_MANAGEMENT)
 
 	assigned_captain = TRUE
 
@@ -955,9 +951,9 @@ SUBSYSTEM_DEF(job)
 
 	var/datum/job/head_job = SSjob.GetJobType(department.department_head)
 	var/datum/outfit/outfit_prototype = head_job.outfits["Default"][SPECIES_HUMAN]
-	var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[initial(outfit_prototype.id_trim)]
+	var/datum/access_template/trim = SSid_access.template_singletons_by_path[initial(outfit_prototype.id_template)]
 
-	id_card.add_access(trim.access, mode=FORCE_ADD_ALL)
+	id_card.add_access(trim.access)
 
 	SSdatacore.OnReady(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(aas_pda_message_department), department.manifest_key, "Your boss called out of work today, and [new_head.real_name] [new_head.p_have()] been granted elevated access in their absence.", "Staff Notice"))
 	temporary_heads_by_dep[department.type] = new_head.real_name

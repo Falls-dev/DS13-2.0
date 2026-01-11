@@ -74,13 +74,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/initiate_docking()
+/obj/docking_port/mobile/supply/pre_dock(obj/docking_port/stationary/new_dock, movement_direction, force)
+	. = ..()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
 		create_mail()
-	. = ..() // Fly/enter transit.
-	if(. != DOCKING_SUCCESS)
 		return
+
+	if(new_dock.id != "supply_away" && !istype(new_dock, /obj/docking_port/stationary/transit) && mode != SHUTTLE_PREARRIVAL)
+		var/datum/atc_conversation/convo = new()
+		convo.chatter()
+		qdel(convo)
+
+/obj/docking_port/mobile/supply/post_dock(obj/docking_port/stationary/new_dock, dock_status)
+	. = ..()
+	if(dock_status != DOCKING_SUCCESS)
+		return
+
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
 
@@ -144,13 +154,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price))
 					if(spawning_order.paying_account)
-						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Marks required: [price]")
 					continue
 
 		if(spawning_order.paying_account)
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
-			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] credits have been charged to your bank account.")
+			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] marks have been charged to your bank account.")
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.department_accounts_by_id[ACCOUNT_CAR]
 			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
@@ -205,7 +215,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	SSeconomy.import_total += value
 	var/datum/bank_account/cargo_budget = SSeconomy.department_accounts_by_id[ACCOUNT_CAR]
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] marks. [cargo_budget.account_balance] marks left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/cargo_account = SSeconomy.department_accounts_by_id[ACCOUNT_CAR]
@@ -244,7 +254,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	master_account.adjust_money(total - cargo_split)
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [total] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [total] marks. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
 /*
 	Generates a box of mail depending on our exports and imports.

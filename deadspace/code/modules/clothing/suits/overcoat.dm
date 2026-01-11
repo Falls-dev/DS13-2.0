@@ -7,6 +7,9 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/clergyhood
 
+TYPEINFO_DEF(/obj/item/clothing/suit/toggle/cseco)
+	default_armor = list(BLUNT = 25, PUNCTURE = 30, SLASH = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 70, ACID = 30)
+
 /obj/item/clothing/suit/toggle/cseco
 	name = "armored security jacket"
 	desc = "An armored jacket often worn by the Chief Security Officer that combines style and protection."
@@ -14,7 +17,6 @@
 	worn_icon = 'deadspace/icons/mob/onmob/suit.dmi'
 	icon_state = "csecojacket"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(BLUNT = 25, PUNCTURE = 30, SLASH = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 70, ACID = 30)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80

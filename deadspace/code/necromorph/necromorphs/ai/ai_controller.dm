@@ -2,10 +2,10 @@
 /datum/ai_controller/necromorph
 	//List of sub actions a AI can do, mutates actions based on planning to do different stuff
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/generic/necro,
 		BB_FOLLOW_TARGET = null,
 		BB_ATTACK_TARGET = null,
-		BB_VISION_RANGE = 9,
+		BB_VISION_RANGE = 9
 	)
 
 	//Hopefully giving them jps doesn't backfire
@@ -30,6 +30,9 @@
 		return FALSE
 	return ..()
 
+//We can add more to this later on, for things like prioritizing targeting the injured and other nasty stuff
+/datum/targeting_strategy/generic/necro
+
 /datum/ai_planning_subtree/basic_melee_attack_subtree/necro
 	melee_attack_behavior = /datum/ai_behavior/necro_attack
 
@@ -40,19 +43,19 @@
 
 /datum/ai_behavior/necro_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
+	controller.set_move_target(controller.blackboard[target_key])
 
 /datum/ai_behavior/necro_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/carbon/human/necro = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/strategy_target = controller.blackboard[targetting_datum_key]
 
-	if(!targetting_datum.can_attack(necro, target))
+	if(!strategy_target.can_attack(necro, target))
 		finish_action(controller, FALSE, target_key)
 		return
 
-	var/hiding_target = targetting_datum.find_hidden_mobs(necro, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = strategy_target.find_hidden_mobs(necro, target) //If this is valid, theyre hidden in something!
 
 	controller.blackboard[hiding_location_key] = hiding_target
 

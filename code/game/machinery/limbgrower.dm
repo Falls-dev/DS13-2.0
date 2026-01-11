@@ -23,14 +23,13 @@
 	/// All the categories of organs we can print.
 	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ETHEREAL, "other")
 
-	biomass_produce = BIOMASS_HARVEST_MEDIUM
+	biomass_produce = BIOMASS_HARVEST_LARGE
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
 	. = ..()
 
-	internal_disk.set_data(
-		DATA_IDX_DESIGNS,
+	var/datum/c4_file/fab_design_bundle/dundle = new(
 		SStech.fetch_designs(
 			list(
 				/datum/design/leftarm,
@@ -48,6 +47,8 @@
 			)
 		)
 	)
+	dundle.name = FABRICATOR_FILE_NAME
+	disk_write_file(dundle, internal_disk)
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -83,7 +84,8 @@
 	var/species_categories = categories.Copy()
 	for(var/species in species_categories)
 		species_categories[species] = list()
-	for(var/datum/design/limb_design as anything in internal_disk.read(DATA_IDX_DESIGNS))
+	var/list/datum/design/design_list = disk_get_designs(FABRICATOR_FILE_NAME, internal_disk)
+	for(var/datum/design/limb_design as anything in design_list)
 		for(var/found_category in species_categories)
 			if(found_category in limb_design.category)
 				species_categories[found_category] += limb_design
@@ -115,7 +117,7 @@
 	return data
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	..()
 
@@ -242,7 +244,7 @@
 /obj/machinery/limbgrower/RefreshParts()
 	. = ..()
 	reagents.maximum_volume = 0
-	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
+	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.maximum_volume += our_beaker.volume
 		our_beaker.reagents.trans_to(src, our_beaker.reagents.total_volume)
 	production_coefficient = 1.25
@@ -280,7 +282,8 @@
 	for(var/datum/design/found_design as anything in SStech.designs)
 		if((found_design.build_type & LIMBGROWER) && !("emagged" in found_design.category))
 			L += found_design
-	internal_disk.set_data(DATA_IDX_DESIGNS, L)
+	var/datum/c4_file/fab_design_bundle/dundle = disk_get_file(FABRICATOR_FILE_NAME)
+	dundle.included_designs = L //This should be safe?
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
@@ -293,9 +296,16 @@
 		)
 	)
 
-	if(!internal_disk.write(DATA_IDX_DESIGNS, designs_on_emag, TRUE))
-		to_chat(user, span_warning("[src] doesn't have enough storage left!"))
+	var/datum/c4_file/fab_design_bundle/dundle = disk_get_file(FABRICATOR_FILE_NAME)
+	if(isnull(dundle)) //If the file just doesn't exist for some reason...
+		dundle = new(list())
+		dundle.name = FABRICATOR_FILE_NAME
+		disk_write_file(dundle, internal_disk)
+	if(!istype(dundle)) //But if it's completely the wrong type...
+		to_chat(user, span_warning("Disk partition error, Design database unreadable!"))
 		return
+
+	dundle.included_designs += designs_on_emag
 
 	to_chat(user, span_warning("Safety overrides have been deactivated!"))
 	obj_flags |= EMAGGED

@@ -5,7 +5,7 @@
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/theseus.json"
+	var/config_filename = "_maps/aegis.json"
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -13,10 +13,10 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
-	// Config actually from the JSON - should default to Theseus
-	var/map_name = "Theseus"
-	var/map_path = "map_files/Theseus"
-	var/map_file = "Theseus.dmm"
+	// Config actually from the JSON - should default to Aegis
+	var/map_name = "Aegis VII"
+	var/map_path = "map_files/AegisVII"
+	var/map_file = "AegisVII.dmm"
 	var/webmap_id = "DaedalusMeta"
 
 	var/traits = null
@@ -125,7 +125,7 @@
 	map_path = json["map_path"]
 
 	map_file = json["map_file"]
-	// "map_file": "Theseus.dmm"
+	// "map_file": "aegisVII.dmm"
 	if (istext(map_file))
 		if (!fexists("_maps/[map_path]/[map_file]"))
 			log_world("Map file ([map_path]/[map_file]) does not exist!")

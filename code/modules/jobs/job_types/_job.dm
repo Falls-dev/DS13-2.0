@@ -170,16 +170,22 @@ GLOBAL_LIST_INIT(job_display_order, list(
 	/// Default security status. Skipped if null.
 	var/default_security_status = null
 
+	/// Pinpad key for their doors, if any.
+	var/pinpad_key = null
 
 /datum/job/New()
 	. = ..()
-	//PARIAH ADDITION START
+
 	if(!job_spawn_title)
 		job_spawn_title = title
-	//PARIAH ADDITION END
+
+	if(pinpad_key)
+		SSid_access.get_static_pincode(pinpad_key, 5)
+
 	var/list/jobs_changes = get_map_changes()
 	if(!jobs_changes)
 		return
+
 	if(isnum(jobs_changes["spawn_positions"]))
 		spawn_positions = jobs_changes["spawn_positions"]
 	if(isnum(jobs_changes["total_positions"]))
@@ -230,6 +236,11 @@ GLOBAL_LIST_INIT(job_display_order, list(
 		var/mob/living/carbon/human/experiencer = spawned
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
+
+	if(pinpad_key)
+		var/pin = SSid_access.get_static_pincode(pinpad_key)
+		spawned.mind.set_note(NOTES_DOOR_CODES, "The pin to your doors is [pin]")
+		to_chat(player_client, span_obviousnotice("You remember the pin to your doors: <b>[pin]</b>"))
 
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
@@ -286,7 +297,7 @@ GLOBAL_LIST_INIT(job_display_order, list(
 		return
 
 	//timer because these should come after the captain announcement
-	SSshuttle.arrivals?.OnDock(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, H.job, channels), 1))
+	SSshuttle.arrivals?.OnDock(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick_safe(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
@@ -325,7 +336,7 @@ GLOBAL_LIST_INIT(job_display_order, list(
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	back = /obj/item/storage/backpack
+	back = /obj/item/storage/backpack/satchel/rig
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
 	belt = /obj/item/modular_computer/tablet/pda
@@ -340,23 +351,6 @@ GLOBAL_LIST_INIT(job_display_order, list(
 	var/pda_slot = ITEM_SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(ispath(back, /obj/item/storage/backpack))
-		switch(H.backpack)
-			if(GBACKPACK)
-				back = /obj/item/storage/backpack //Grey backpack
-			if(GSATCHEL)
-				back = /obj/item/storage/backpack/satchel //Grey satchel
-			if(GDUFFELBAG)
-				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-			if(LSATCHEL)
-				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-			if(DSATCHEL)
-				back = satchel //Department satchel
-			if(DDUFFELBAG)
-				back = duffelbag //Department duffel bag
-			else
-				back = backpack //Department backpack
-
 	/// Handles jumpskirt pref
 	if(allow_jumpskirt && H.jumpsuit_style == PREF_SKIRT)
 		uniform = text2path("[uniform]/skirt") || uniform
@@ -409,19 +403,8 @@ GLOBAL_LIST_INIT(job_display_order, list(
 			spawn(-1) //Ssshhh linter don't worry about the lack of a user it's all gonna be okay.
 				PDA.turn_on()
 
-/datum/outfit/job/get_chameleon_disguise_info()
-	var/list/types = ..()
-	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
-	types += backpack
-	types += satchel
-	types += duffelbag
-	return types
-
 /datum/outfit/job/get_types_to_preload()
 	var/list/preload = ..()
-	preload += backpack
-	preload += satchel
-	preload += duffelbag
 	preload += /obj/item/storage/backpack/satchel/leather
 	var/skirtpath = "[uniform]/skirt"
 	preload += text2path(skirtpath)

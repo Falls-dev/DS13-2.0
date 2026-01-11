@@ -1,43 +1,31 @@
-/obj/item/clothing/suit/hooded/ds
-	name = "bio suit"
-	desc = "A suit that protects against biological contamination"
-	icon = 'deadspace/icons/obj/clothing/suits.dmi'
-	worn_icon = 'deadspace/icons/mob/onmob/suit.dmi'
-	icon_state = "bio_ishi"
-	hoodtype = /obj/item/clothing/head/hooded/ishi
-	w_class = WEIGHT_CLASS_BULKY
-	permeability_coefficient = 0.01
-	clothing_flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 0.2
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/gun/syringe)
-	armor = list(BLUNT = 0, PUNCTURE = 0, SLASH = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	strip_delay = 70
-	equip_delay_other = 70
-	resistance_flags = ACID_PROOF
-
-/obj/item/clothing/suit/hooded/eg
+/obj/item/clothing/suit/bio_suit/eg
 	name = "Earthgov black bio suit"
 	desc = "A suit that protects against biological contamination"
 	icon = 'deadspace/icons/obj/clothing/suits.dmi'
 	worn_icon = 'deadspace/icons/mob/onmob/suit.dmi'
 	icon_state = "bio_black"
-	hoodtype = /obj/item/clothing/head/hooded/eg
-	w_class = WEIGHT_CLASS_BULKY
-	permeability_coefficient = 0.01
-	clothing_flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 0.2
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/gun/syringe)
-	armor = list(BLUNT = 0, PUNCTURE = 0, SLASH = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	strip_delay = 70
-	equip_delay_other = 70
-	resistance_flags = ACID_PROOF
 
-/obj/item/clothing/suit/hooded/eg/white
+/obj/item/clothing/head/bio_hood/eg
+	name = "Earthgov bio hood"
+	desc = "a standard issued Earth gov biological protection hood, mind the face"
+	icon = 'deadspace/icons/obj/clothing/hats.dmi'
+	worn_icon = 'deadspace/icons/mob/onmob/head.dmi'
+	icon_state = "bio_black"
+
+/obj/item/clothing/suit/bio_suit/eg/white
 	name = "Earthgov bio hood"
 	desc = "A suit that protects against biological contamination"
 	icon_state = "bio_white"
-	hoodtype = /obj/item/clothing/head/hooded/eg/white
+
+/obj/item/clothing/head/bio_hood/eg/white
+	name = "Earthgov bio hood"
+	icon = 'deadspace/icons/obj/clothing/hats.dmi'
+	worn_icon = 'deadspace/icons/mob/onmob/head.dmi'
+	icon_state = "bio_white"
+
+/obj/item/clothing/head/bio_hood/ishi
+	name = "bio hood"
+	desc = "a standard issued CEC biological protection hood"
+	icon = 'deadspace/icons/obj/clothing/hats.dmi'
+	worn_icon = 'deadspace/icons/mob/onmob/head.dmi'
+	icon_state = "bio_ishi"

@@ -55,7 +55,8 @@
 		action_datum = new action_datum(necro)
 		action_datum.Grant(necro)
 
-	necro.armor = getArmor(arglist(armor))
+	//I hate this trick, but there is little precedent for inserting armor into a mob class without going to typeinfo now
+	necro.setArmor(getArmor(arglist(armor)))
 
 	necro.melee_damage_upper = melee_damage_upper
 

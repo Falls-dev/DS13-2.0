@@ -8,6 +8,8 @@
 	spawn_positions = 1
 	supervisors = "the medical director"
 	selection_color = "#013d3b"
+
+	pinpad_key = "FEELSGOODMAN"
 	exp_granted_type = EXP_TYPE_CREW
 
 	employers = list(
@@ -48,7 +50,7 @@
 	jobtype = /datum/job/psychologist
 
 	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/job/psychologist
+	id_template = /datum/access_template/job/psychologist
 	uniform = /obj/item/clothing/under/rank/medical/ds_med
 	backpack_contents = list(
 		/obj/item/storage/pill_bottle/lsdpsych,

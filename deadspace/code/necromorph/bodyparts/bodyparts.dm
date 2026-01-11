@@ -6,7 +6,6 @@
 	bodypart_flags = (BP_NO_PAIN | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "chest"
-	interaction_flags_item = NONE //So you don't pick it up
 	w_class = WEIGHT_CLASS_GIGANTIC //So you can't put them in bags
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -27,7 +26,6 @@
 	bodypart_flags = (BP_NO_PAIN | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "head"
-	interaction_flags_item = NONE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -60,7 +58,6 @@
 	bodypart_flags = (BP_NO_PAIN | BP_IS_GRABBY_LIMB | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "l_arm"
-	interaction_flags_item = NONE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -93,7 +90,6 @@
 	bodypart_flags = (BP_NO_PAIN | BP_IS_GRABBY_LIMB | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "r_arm"
-	interaction_flags_item = NONE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -126,7 +122,6 @@
 	bodypart_flags = (BP_IS_MOVEMENT_LIMB | BP_NO_PAIN | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "l_leg"
-	interaction_flags_item = NONE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -159,7 +154,6 @@
 	bodypart_flags = (BP_IS_MOVEMENT_LIMB | BP_NO_PAIN | BP_HAS_BLOOD | BP_CAN_BE_DISLOCATED)
 	icon_static = 'deadspace/icons/necromorphs/base_necromorph.dmi'
 	icon_state = "r_leg"
-	interaction_flags_item = NONE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	icon_dmg_overlay = null
 	icon_bloodycover = null
@@ -183,3 +177,34 @@
 
 	else if((brute_dam + brute) >= max_damage * DROPLIMB_THRESHOLD_TEAROFF)
 		return dismember(DROPLIMB_EDGE, FALSE, FALSE)
+
+//This is a bunch of annoying code so the offsetted limbs don't cause problems when picked up
+/obj/item/bodypart/chest/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/bodypart/head/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/bodypart/arm/left/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/bodypart/arm/right/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/bodypart/leg/left/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/bodypart/leg/right/necromorph/update_icon_dropped(update_limb = TRUE)
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0

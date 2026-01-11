@@ -12,27 +12,27 @@
 	name += " | Cost: [cost] psy"
 
 /// Intercepts client owner clicks to activate the ability
-/datum/action/cooldown/necro/psy/InterceptClickOn(mob/camera/marker_signal/caller, params, atom/target)
+/datum/action/cooldown/necro/psy/InterceptClickOn(mob/camera/marker_signal/invoker, params, atom/target)
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(unset_after_click)
-			unset_click_ability(caller, refund_cooldown = TRUE)
-		caller.next_click = world.time + click_cd_override
+			unset_click_ability(invoker, refund_cooldown = TRUE)
+		invoker.next_click = world.time + click_cd_override
 		return
 
 	if(!IsAvailable())
 		return FALSE
 	if(!target)
 		return FALSE
-	if(caller.psy_energy < cost)
-		to_chat(caller, span_notice("You don't have enough psy to use this ability"))
+	if(invoker.psy_energy < cost)
+		to_chat(invoker, span_notice("You don't have enough psy to use this ability"))
 		return FALSE
 
 	if(istype(target, /atom/movable/screen/cameranet_static))
 		if(!click_through_static)
 			return FALSE
-		var/new_target = parse_caught_click_modifiers(modifiers, get_turf(caller), caller.client)
+		var/new_target = parse_caught_click_modifiers(modifiers, get_turf(invoker), invoker.client)
 		params = list2params(modifiers)
 		if(!new_target)
 			return FALSE
@@ -44,8 +44,8 @@
 
 	// And if we reach here, the action was complete successfully
 	if(!LAZYACCESS(modifiers, SHIFT_CLICK) && unset_after_click)
-		unset_click_ability(caller, refund_cooldown = FALSE)
-	caller.next_click = world.time + click_cd_override
+		unset_click_ability(invoker, refund_cooldown = FALSE)
+	invoker.next_click = world.time + click_cd_override
 
 	return TRUE
 
